@@ -1,6 +1,10 @@
 # NomosGrammar
-Grammar for input to Menhir parser-generator to generate Parser for Nomos
+Grammar for input to Menhir parser-generator to generate Parser for Nomos (https://www.cs.cmu.edu/~janh/projects/02_nomos/).
+
+
 To build the parser, run `make` from the current directory.
+
+
 To run the parser, run `./main.native`. Then type your input as a single line and press Ctrl-D to indicate the end of your input.
 The expressions currently supported by the parser are:
 - values such as booleans and integers
