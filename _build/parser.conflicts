@@ -1,0 +1,99 @@
+
+** Conflict (shift/reduce) in state 24.
+** Token involved: CONS
+** This state is reached from prog after reading:
+
+LET bind IN expr 
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+prog 
+term 
+expr 
+(?)
+
+** In state 24, looking ahead at CONS, shifting is permitted
+** because of the following sub-derivation:
+
+letin 
+LET bind IN expr 
+            listVal 
+            cons_list 
+            expr . CONS comma_list 
+
+** In state 24, looking ahead at CONS, reducing production
+** letin -> LET bind IN expr 
+** is permitted because of the following sub-derivation:
+
+listVal 
+cons_list 
+expr CONS comma_list // lookahead token appears
+letin // lookahead token is inherited
+LET bind IN expr . 
+
+** Conflict (shift/reduce) in state 15.
+** Token involved: CONS
+** This state is reached from prog after reading:
+
+IF expr THEN expr ELSE expr 
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+prog 
+term 
+expr 
+(?)
+
+** In state 15, looking ahead at CONS, reducing production
+** cond -> IF expr THEN expr ELSE expr 
+** is permitted because of the following sub-derivation:
+
+listVal 
+cons_list 
+expr CONS comma_list // lookahead token appears
+cond // lookahead token is inherited
+IF expr THEN expr ELSE expr . 
+
+** In state 15, looking ahead at CONS, shifting is permitted
+** because of the following sub-derivation:
+
+cond 
+IF expr THEN expr ELSE expr 
+                       listVal 
+                       cons_list 
+                       expr . CONS comma_list 
+
+** Conflict (shift/reduce) in state 13.
+** Token involved: CONS
+** This state is reached from prog after reading:
+
+IF expr THEN expr 
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+prog 
+term 
+expr 
+(?)
+
+** In state 13, looking ahead at CONS, reducing production
+** cond -> IF expr THEN expr 
+** is permitted because of the following sub-derivation:
+
+listVal 
+cons_list 
+expr CONS comma_list // lookahead token appears
+cond // lookahead token is inherited
+IF expr THEN expr . 
+
+** In state 13, looking ahead at CONS, shifting is permitted
+** because of the following sub-derivation:
+
+cond 
+IF expr THEN expr 
+             listVal 
+             cons_list 
+             expr . CONS comma_list 
