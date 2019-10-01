@@ -10,9 +10,15 @@
 %token IN
 %token CONS
 %token EQUALS
+%token MATCH
+%token WITH
+%token BAR
+%token FUN
+%token EMPTYLIST
 %token LSQUARE
 %token RSQUARE
 %token COMMA
+%token RIGHTARROW
 %token PLUS MINUS TIMES DIV
 %token LPAREN RPAREN
 %nonassoc THEN
@@ -31,12 +37,15 @@ expr :
     | TRUE              { Bool true  }
     | FALSE             { Bool false }
     | i = INT           { Int i  }
+    | x = ID            { Var x  }
     | MINUS i = INT     { Int (-i) }
     | c = cond          { c           }
     | l = letin         { l           }
     | lst = listVal     { lst         }
     | a = app           { a           }
     | c = cons          { c           }
+    | m = matchExp      { m           }
+    | l = lambdaExp     { l           }
     ;
     
 cond :
@@ -55,6 +64,7 @@ letin :
     ;
 
 listVal : 
+      | EMPTYLIST   { Ast.List [] }
       | LSQUARE; vl = list_fields; RSQUARE { Ast.List vl }
       ;
 
@@ -74,5 +84,20 @@ op :
     | x = ID { x }
     ;
 
+matchExp:
+    | MATCH; x = ID; WITH; BAR; EMPTYLIST; RIGHTARROW; y = expr; BAR; a = ID; 
+      CONS; b = ID; RIGHTARROW; c = expr   { Ast.Match(x, y, a, b, c)  }
+    ;  
+
 app :
     | e1 = expr opr = op e2 = expr { Ast.Op(e1, opr, e2) }
+
+id_list:
+    | x = ID { Ast.Single(x) }
+    | x = ID; l = id_list { Ast.Curry(x, l) } 
+    ;
+
+lambdaExp :
+    | FUN;  args = id_list; RIGHTARROW; body = expr 
+                                        { Ast.Lambda(args, body)  }
+    ;

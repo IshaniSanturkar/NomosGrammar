@@ -1,3 +1,11 @@
+let rec print_args (args : Ast.arglist) = 
+        match args with
+                | Single(x) -> x
+                | Curry(x, rest) -> let a : string = print_args(rest) in
+                                    Printf.sprintf "%s %s"
+                                    x
+                                    a
+
 let rec print_list (l : Ast.expr list) = 
         match l with
         [] -> ""
@@ -23,6 +31,7 @@ and print_ast (t : Ast.expr) =
                                                 a
                                                 b
                                                 c
+           | Var(x)  -> Printf.sprintf "%s" x
            | Bool(b) -> Printf.sprintf "%B" b
            | Int(i)  -> Printf.sprintf "%d" i
            | LetIn(Binding(x,e1), e2) -> let a : string = print_ast(e1) in
@@ -44,6 +53,16 @@ and print_ast (t : Ast.expr) =
                                  Printf.sprintf "(%s) :: (%s)"
                                                 a
                                                 b
+           | Match(x,y,a,b,c) -> let p : string = print_ast(y) in
+                                 let q : string = print_ast(c) in
+                                 Printf.sprintf "match (%s) with 
+                                                 | [] -> (%s) 
+                                                 | (%s) :: (%s) -> (%s)"
+                                                 x p a b q
+           | Lambda(args, body) -> let p : string = print_args(args) in
+                                   let q : string = print_ast(body)  in
+                                   Printf.sprintf "fun (%s) -> (%s)"
+                                   p q
 
 
 let process (line : string) =

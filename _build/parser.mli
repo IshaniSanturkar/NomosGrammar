@@ -2,13 +2,16 @@
 (* The type of tokens. *)
 
 type token = 
+  | WITH
   | TRUE
   | TIMES
   | THEN
   | RSQUARE
   | RPAREN
+  | RIGHTARROW
   | PLUS
   | MINUS
+  | MATCH
   | LSQUARE
   | LPAREN
   | LET
@@ -16,13 +19,16 @@ type token =
   | IN
   | IF
   | ID of (string)
+  | FUN
   | FALSE
   | EQUALS
   | EOF
+  | EMPTYLIST
   | ELSE
   | DIV
   | CONS
   | COMMA
+  | BAR
 
 (* This exception is raised by the monolithic API functions. *)
 

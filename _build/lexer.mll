@@ -37,6 +37,12 @@ and token = parse
   | ')'     { RPAREN }
   | "["     { LSQUARE }
   | "]"     { RSQUARE }
+  | "match" { MATCH }
+  | "fun"   { FUN   }
+  | "with"  { WITH  }
+  | "|"     { BAR  }
+  | "[]"    { EMPTYLIST }
+  | "->"    { RIGHTARROW }
   | "::"    { CONS }
   | ","    { COMMA } 
   | "if"    { IF }
