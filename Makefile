@@ -2,7 +2,7 @@
 
 MENHIR          := menhir
 
-MENHIRFLAGS     := --infer
+MENHIRFLAGS     := --infer --explain
 
 OCAMLBUILD      := ocamlbuild -use-ocamlfind -use-menhir -menhir "$(MENHIR) $(MENHIRFLAGS)"
 

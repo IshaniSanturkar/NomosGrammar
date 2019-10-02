@@ -15,14 +15,9 @@ let rec print_list (l : Ast.expr list) =
                  Printf.sprintf "%s" a
                  else
                  Printf.sprintf "%s,%s" a b
+
 and print_ast (t : Ast.expr) = 
         match t with
-           |  IfNoElse(c1, c2) ->
-                           let a : string = print_ast(c1) in
-                           let b : string = print_ast(c2) in
-                           Printf.sprintf "if (%s) then (%s)"
-                                                a
-                                                b
            |  IfWithElse(c1, c2, c3) ->
                            let a : string = print_ast(c1) in
                            let b : string = print_ast(c2) in
@@ -53,16 +48,23 @@ and print_ast (t : Ast.expr) =
                                  Printf.sprintf "(%s) :: (%s)"
                                                 a
                                                 b
-           | Match(x,y,a,b,c) -> let p : string = print_ast(y) in
+           | Match(x,y,a,b,c) -> let i : string = print_ast(x) in
+                                 let p : string = print_ast(y) in
                                  let q : string = print_ast(c) in
                                  Printf.sprintf "match (%s) with 
                                                  | [] -> (%s) 
                                                  | (%s) :: (%s) -> (%s)"
-                                                 x p a b q
+                                                 i p a b q
            | Lambda(args, body) -> let p : string = print_args(args) in
                                    let q : string = print_ast(body)  in
                                    Printf.sprintf "fun (%s) -> (%s)"
                                    p q
+           | App (expr1, expr2) -> let i : string = print_ast(expr1) in
+                                   let j : string = print_ast(expr2) in
+                                   Printf.sprintf "(%s)(%s)"
+                                   i
+                                   j
+ 
 
 
 let process (line : string) =
@@ -96,4 +98,3 @@ let rec repeat channel =
   
 let () =
   repeat (Lexing.from_channel stdin)
-

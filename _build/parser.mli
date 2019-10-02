@@ -29,6 +29,7 @@ type token =
   | CONS
   | COMMA
   | BAR
+  | APP
 
 (* This exception is raised by the monolithic API functions. *)
 

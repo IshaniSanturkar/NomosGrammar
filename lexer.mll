@@ -38,6 +38,7 @@ and token = parse
   | "["     { LSQUARE }
   | "]"     { RSQUARE }
   | "match" { MATCH }
+  | "app"   { APP }
   | "fun"   { FUN   }
   | "with"  { WITH  }
   | "|"     { BAR  }
